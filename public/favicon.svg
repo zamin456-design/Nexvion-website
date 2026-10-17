@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <defs>
+    <linearGradient id="nex-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06b6d4" />
+      <stop offset="50%" stop-color="#8b5cf6" />
+      <stop offset="100%" stop-color="#ec4899" />
+    </linearGradient>
+  </defs>
+  <rect width="100" height="100" rx="28" fill="#090d16" />
+  <path d="M28 72V28L54 58V28M54 42L72 72M72 72V28" stroke="url(#nex-grad)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="54" cy="58" r="4" fill="#06b6d4" />
+</svg>
