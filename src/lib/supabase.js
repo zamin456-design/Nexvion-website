@@ -67,7 +67,7 @@ export async function signUpUser({ email, password, full_name, company, role = '
     },
   });
   if (error) throw error;
-  return { success: true, user: data.user, mode: 'supabase' };
+  return { success: true, user: data.user, session: data.session, mode: 'supabase' };
 }
 
 export async function signInUser({ email, password }) {

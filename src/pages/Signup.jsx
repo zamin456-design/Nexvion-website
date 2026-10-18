@@ -61,7 +61,7 @@ export default function Signup() {
     setError('');
 
     try {
-      await signup({
+      const result = await signup({
         email: formData.email,
         password: formData.password,
         full_name: formData.fullName,
@@ -77,7 +77,14 @@ export default function Signup() {
       });
 
       const serviceId = new URLSearchParams(location.search).get('service');
-      navigate('/portal', { state: serviceId ? { serviceId } : undefined });
+      navigate('/login', {
+        state: {
+          signupMessage: result.session
+            ? 'Your account has been created. Sign in to continue and place your order.'
+            : 'Your account has been created. Check your email and confirm your address before signing in to place an order.',
+          serviceId: serviceId || undefined,
+        },
+      });
     } catch (err) {
       const message = err.message || '';
       if (/email rate limit exceeded|over_email_send_rate_limit/i.test(message)) {

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { 
   Lock, 
@@ -19,6 +19,7 @@ export default function Login() {
 
   const { login, logout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -45,10 +46,19 @@ export default function Login() {
       if (isUserAdmin) {
         navigate('/admin');
       } else {
-        navigate('/portal');
+        navigate('/portal', {
+          state: location.state?.serviceId
+            ? { serviceId: location.state.serviceId }
+            : undefined,
+        });
       }
     } catch (err) {
-      setError(err.message || 'Authentication failed. Please verify credentials.');
+      const message = err.message || '';
+      setError(
+        /email not confirmed|email_not_confirmed/i.test(message)
+          ? 'Please confirm your email using the link we sent before signing in.'
+          : message || 'Authentication failed. Please verify credentials.'
+      );
     } finally {
       setLoading(false);
     }
@@ -81,6 +91,13 @@ export default function Login() {
                 Sign in to manage your AI builds or access administrative consoles.
               </p>
             </div>
+
+            {location.state?.signupMessage && (
+              <div className="mb-5 p-3 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-200 text-xs flex items-center gap-2">
+                <Mail className="w-4 h-4 shrink-0" />
+                <span>{location.state.signupMessage}</span>
+              </div>
+            )}
 
             {/* Role Tab Selector */}
             <div className="grid grid-cols-2 gap-1.5 p-1 rounded-xl bg-black/50 border border-white/10 mb-6 font-mono text-xs">

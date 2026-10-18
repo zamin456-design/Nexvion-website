@@ -89,11 +89,10 @@ export function AuthProvider({ children }) {
 
   const signup = async (details) => {
     const res = await signUpUser(details);
-    if (res.success && res.user) {
-      setUser(res.user);
-      return res.user;
+    if (res.success && res.user && res.session) {
+      setUser(await getSupabaseUserProfile(res.user));
     }
-    throw new Error('Sign up failed');
+    return res;
   };
 
   const logout = async () => {
