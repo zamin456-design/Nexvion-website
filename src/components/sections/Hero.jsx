@@ -56,18 +56,21 @@ export default function Hero() {
             <div className="pt-10 flex flex-wrap items-center gap-2.5">
               <Link
                 to="/services"
+                state={{ serviceId: 'automation-agents' }}
                 className="px-4 py-2 rounded-full text-xs font-medium text-white/80 bg-white/[0.03] border border-white/10 hover:border-cyan-400/40 hover:text-white transition-all"
               >
                 AI Agents
               </Link>
               <Link
                 to="/services"
+                state={{ serviceId: 'rag-llm' }}
                 className="px-4 py-2 rounded-full text-xs font-medium text-white/80 bg-white/[0.03] border border-white/10 hover:border-purple-400/40 hover:text-white transition-all"
               >
                 RAG & LLM Solutions
               </Link>
               <Link
                 to="/services"
+                state={{ serviceId: 'fullstack-app' }}
                 className="px-4 py-2 rounded-full text-xs font-medium text-white/80 bg-white/[0.03] border border-white/10 hover:border-pink-400/40 hover:text-white transition-all"
               >
                 Full-Stack & SaaS

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { contactDetails } from '../../lib/contactData';
 
 export default function Footer() {
   return (
@@ -16,23 +17,20 @@ export default function Footer() {
         <div className="space-y-1">
           <p className="text-white/90">
             <span className="text-muted">Phone </span>
-            <a href="tel:+923418921169" className="hover:text-white transition-colors font-mono">
-              +923418921169
+            <a href={`tel:${contactDetails.phone}`} className="hover:text-white transition-colors font-mono">
+              {contactDetails.phone}
             </a>
           </p>
-          <p>
-            <a href="mailto:zamijafri456@gmail.com" className="hover:text-white transition-colors">
-              zamijafri456@gmail.com
-            </a>
-          </p>
-          <p>
-            <a href="mailto:qasu437@gmail.com" className="hover:text-white transition-colors">
-              qasu437@gmail.com
-            </a>
-          </p>
+          {contactDetails.emails.map((email) => (
+            <p key={email}>
+              <a href={`mailto:${email}`} className="hover:text-white transition-colors">
+                {email}
+              </a>
+            </p>
+          ))}
           <p>
             <a
-              href="https://linkedin.com/company/nex-vion"
+              href={contactDetails.linkedIn}
               target="_blank"
               rel="noreferrer"
               className="hover:text-white transition-colors"

@@ -1,18 +1,34 @@
+import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { servicesCatalog } from '../lib/servicesData';
 import { useAuth } from '../context/AuthContext';
 import TiltCard from '../components/visuals/TiltCard';
+import ServiceBookingOptionsModal from '../components/ServiceBookingOptionsModal';
 
 export default function Services() {
   const { user } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const [selectedService, setSelectedService] = useState(null);
 
-  const handleBook = (serviceId) => {
+  useEffect(() => {
+    const requestedService = servicesCatalog.find(
+      (service) => service.id === location.state?.serviceId
+    );
+    if (requestedService) setSelectedService(requestedService);
+  }, [location.key, location.state]);
+
+  const handleBook = (service) => {
+    setSelectedService(service);
+  };
+
+  const handleCreateAccount = () => {
+    const serviceId = selectedService.id;
     if (user) {
-      navigate('/portal');
+      navigate('/portal', { state: { serviceId } });
     } else {
-      navigate('/signup');
+      navigate(`/signup?service=${encodeURIComponent(serviceId)}`);
     }
   };
 
@@ -78,7 +94,8 @@ export default function Services() {
               {/* Book Button */}
               <div className="pt-6">
                 <button
-                  onClick={() => handleBook(svc.id)}
+                  onClick={() => handleBook(svc)}
+                  type="button"
                   className="w-full py-3 rounded-full text-xs font-bold text-[#08060d] bg-gradient-to-r from-[#fef08a] via-[#fde047] to-[#facc15] hover:opacity-95 transition-all shadow-md shadow-yellow-950/20 hover:scale-[1.01]"
                 >
                   Book this service
@@ -89,6 +106,14 @@ export default function Services() {
         </div>
 
       </div>
+      {selectedService && (
+        <ServiceBookingOptionsModal
+          service={selectedService}
+          onClose={() => setSelectedService(null)}
+          onCreateAccount={handleCreateAccount}
+          hasAccount={Boolean(user)}
+        />
+      )}
     </>
   );
 }

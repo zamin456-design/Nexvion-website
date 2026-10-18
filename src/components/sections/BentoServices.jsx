@@ -35,6 +35,7 @@ export default function BentoServices() {
               <div className="pt-16">
                 <Link
                   to="/services"
+                  state={{ serviceId: 'automation-agents' }}
                   className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#fde047] hover:underline"
                 >
                   <span>Book from $200</span>
@@ -61,6 +62,7 @@ export default function BentoServices() {
                 <div className="pt-6">
                   <Link
                     to="/services"
+                    state={{ serviceId: 'rag-llm' }}
                     className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#fde047] hover:underline"
                   >
                     <span>Book from $600</span>
@@ -84,6 +86,7 @@ export default function BentoServices() {
                 <div className="pt-6">
                   <Link
                     to="/services"
+                    state={{ serviceId: 'ai-chatbot' }}
                     className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#fde047] hover:underline"
                   >
                     <span>Book from $150</span>
@@ -107,6 +110,7 @@ export default function BentoServices() {
                 <div className="pt-6">
                   <Link
                     to="/services"
+                    state={{ serviceId: 'custom-ai-model' }}
                     className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#fde047] hover:underline"
                   >
                     <span>Book from $500</span>
@@ -130,6 +134,7 @@ export default function BentoServices() {
                 <div className="pt-6">
                   <Link
                     to="/services"
+                    state={{ serviceId: 'fullstack-app' }}
                     className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#fde047] hover:underline"
                   >
                     <span>Book from $250</span>
@@ -153,6 +158,7 @@ export default function BentoServices() {
                 <div className="pt-6">
                   <Link
                     to="/services"
+                    state={{ serviceId: 'fine-tuning' }}
                     className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#fde047] hover:underline"
                   >
                     <span>Book from $700</span>

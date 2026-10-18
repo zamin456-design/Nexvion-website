@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { 
   User, 
@@ -29,6 +29,7 @@ export default function Signup() {
 
   const { signup } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -75,7 +76,8 @@ export default function Signup() {
         colors: ['#06b6d4', '#8b5cf6', '#ec4899'],
       });
 
-      navigate('/portal');
+      const serviceId = new URLSearchParams(location.search).get('service');
+      navigate('/portal', { state: serviceId ? { serviceId } : undefined });
     } catch (err) {
       const message = err.message || '';
       if (/email rate limit exceeded|over_email_send_rate_limit/i.test(message)) {

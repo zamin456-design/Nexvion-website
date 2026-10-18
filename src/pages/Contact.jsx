@@ -1,29 +1,30 @@
 import { Helmet } from 'react-helmet-async';
 import { Linkedin, Mail, Phone } from 'lucide-react';
+import { contactDetails } from '../lib/contactData';
 
 const contactMethods = [
   {
     label: 'Email',
-    value: 'zamijafri456@gmail.com',
-    href: 'mailto:zamijafri456@gmail.com',
+    value: contactDetails.emails[0],
+    href: `mailto:${contactDetails.emails[0]}`,
     Icon: Mail,
   },
   {
     label: 'Email',
-    value: 'qasu437@gmail.com',
-    href: 'mailto:qasu437@gmail.com',
+    value: contactDetails.emails[1],
+    href: `mailto:${contactDetails.emails[1]}`,
     Icon: Mail,
   },
   {
     label: 'Phone',
-    value: '+923418921169',
-    href: 'tel:+923418921169',
+    value: contactDetails.phone,
+    href: `tel:${contactDetails.phone}`,
     Icon: Phone,
   },
   {
     label: 'LinkedIn',
     value: 'linkedin.com/company/nex-vion',
-    href: 'https://linkedin.com/company/nex-vion',
+    href: contactDetails.linkedIn,
     Icon: Linkedin,
     external: true,
   },

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { X, Plus, Send } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { servicesCatalog } from '../lib/servicesData';
@@ -21,6 +21,7 @@ const MILESTONES = ['New', 'In discussion', 'In progress', 'Testing', 'Completed
 
 export default function UserPortal() {
   const { user, logout } = useAuth();
+  const location = useLocation();
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedBookingIndex, setSelectedBookingIndex] = useState(0);
@@ -39,6 +40,16 @@ export default function UserPortal() {
 
   const activeBooking = bookings[selectedBookingIndex] || null;
   const chosenService = servicesCatalog.find((s) => s.id === selectedServiceId) || servicesCatalog[0];
+
+  useEffect(() => {
+    const requestedService = servicesCatalog.find(
+      (service) => service.id === location.state?.serviceId
+    );
+    if (requestedService) {
+      setSelectedServiceId(requestedService.id);
+      setIsModalOpen(true);
+    }
+  }, [location.key, location.state]);
 
   const loadBookings = async () => {
     if (!user) return;
