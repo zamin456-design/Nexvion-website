@@ -16,8 +16,18 @@ export default function Footer() {
         <div className="space-y-1">
           <p className="text-white/90">
             <span className="text-muted">Phone </span>
-            <a href="tel:03418921169" className="hover:text-white transition-colors font-mono">
-              03418921169
+            <a href="tel:+923418921169" className="hover:text-white transition-colors font-mono">
+              +923418921169
+            </a>
+          </p>
+          <p>
+            <a href="mailto:zamijafri456@gmail.com" className="hover:text-white transition-colors">
+              zamijafri456@gmail.com
+            </a>
+          </p>
+          <p>
+            <a href="mailto:qasu437@gmail.com" className="hover:text-white transition-colors">
+              qasu437@gmail.com
             </a>
           </p>
           <p>

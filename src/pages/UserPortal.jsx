@@ -4,6 +4,11 @@ import { Link } from 'react-router-dom';
 import { X, Plus, Send } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { servicesCatalog } from '../lib/servicesData';
+import {
+  getBookingStatusLabel,
+  getBookingStatusStep,
+  getBookingStatusValue,
+} from '../lib/bookingStatus';
 import { 
   fetchUserBookings, 
   createServiceBooking, 
@@ -12,7 +17,7 @@ import {
 } from '../lib/supabase';
 import confetti from 'canvas-confetti';
 
-const MILESTONES = ['New', 'In discussion', 'Accepted', 'In progress', 'Completed'];
+const MILESTONES = ['New', 'In discussion', 'In progress', 'Testing', 'Completed'];
 
 export default function UserPortal() {
   const { user, logout } = useAuth();
@@ -137,35 +142,25 @@ export default function UserPortal() {
   };
 
   const getStatusBadge = (status) => {
-    if (status === 'in_discussion' || status === 'In discussion') {
+    const value = getBookingStatusValue(status);
+    if (value === 'reviewing') {
       return 'bg-[#4f46e5]/20 text-[#a5b4fc] border border-[#4f46e5]/30';
     }
-    if (status === 'new' || status === 'New' || status === 'pending') {
+    if (value === 'pending') {
       return 'bg-[#b45309]/20 text-[#fde047] border border-[#b45309]/30';
     }
-    if (status === 'in_progress' || status === 'In progress') {
+    if (value === 'in_development' || value === 'testing') {
       return 'bg-[#0e7490]/20 text-[#67e8f9] border border-[#0e7490]/30';
     }
-    if (status === 'completed' || status === 'Completed' || status === 'accepted') {
+    if (value === 'completed') {
       return 'bg-[#065f46]/20 text-[#6ee7b7] border border-[#065f46]/30';
     }
     return 'bg-white/10 text-white/90 border border-white/10';
   };
 
-  const getStatusLabel = (status) => {
-    if (status === 'in_discussion') return 'In discussion';
-    if (status === 'in_progress') return 'In progress';
-    if (status === 'pending') return 'New';
-    return status.charAt(0).toUpperCase() + status.slice(1);
-  };
+  const getStatusLabel = getBookingStatusLabel;
 
-  const currentMilestoneIdx = activeBooking
-    ? MILESTONES.findIndex(
-        (m) =>
-          m.toLowerCase().replace(/\s+/g, '_') ===
-          activeBooking.status.toLowerCase().replace(/\s+/g, '_')
-      )
-    : 1;
+  const currentMilestoneIdx = activeBooking ? getBookingStatusStep(activeBooking.status) : -1;
 
   return (
     <>

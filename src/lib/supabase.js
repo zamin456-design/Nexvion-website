@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
+import { BOOKING_STATUSES } from './bookingStatus';
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
@@ -148,6 +149,10 @@ export async function fetchAllBookings() {
 
 export async function updateBookingStatus(bookingId, status, notes = '') {
   const client = requireSupabase();
+  if (!BOOKING_STATUSES.some((bookingStatus) => bookingStatus.value === status)) {
+    throw new Error(`Unsupported booking status: ${status}`);
+  }
+
   const updates = {
     status,
     updated_at: new Date().toISOString(),
@@ -162,6 +167,7 @@ export async function updateBookingStatus(bookingId, status, notes = '') {
     .single();
 
   if (error) throw error;
+  if (!data) throw new Error('The booking status was not updated.');
   return { success: true, booking: data };
 }
 
