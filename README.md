@@ -55,6 +55,12 @@ Follow these exact steps to connect your external Supabase organization and hand
 3. Open the file [**`supabase/schema.sql`**](./supabase/schema.sql) in this repository and copy the entire file.
 4. Paste the SQL into the Supabase SQL editor and click **Run**.
 
+If a client sees `permission denied for table service_bookings` when booking,
+run [`supabase/fix-booking-permissions.sql`](./supabase/fix-booking-permissions.sql)
+in the Supabase SQL Editor. It restores the required authenticated table
+privileges and booking row-level security policies without making bookings
+public.
+
 **What this SQL creates for you:**
 - **`profiles`** table with automatic role tracking (`client` or `admin`).
 - Automatic trigger `on_auth_user_created` so every signup automatically populates a profile!

@@ -32,6 +32,10 @@ $$;
 REVOKE ALL ON FUNCTION public.is_admin() FROM PUBLIC, anon;
 GRANT EXECUTE ON FUNCTION public.is_admin() TO authenticated;
 
+-- Clients may create/read bookings; RLS below limits rows to their own.
+REVOKE ALL ON TABLE public.service_bookings FROM anon, PUBLIC;
+GRANT SELECT, INSERT, UPDATE ON TABLE public.service_bookings TO authenticated;
+
 DROP POLICY IF EXISTS "Public can view own profile" ON public.profiles;
 CREATE POLICY "Public can view own profile"
 ON public.profiles FOR SELECT
@@ -50,6 +54,12 @@ CREATE POLICY "Clients can view own bookings"
 ON public.service_bookings FOR SELECT
 TO authenticated
 USING ((SELECT auth.uid()) = user_id OR (SELECT public.is_admin()));
+
+DROP POLICY IF EXISTS "Clients can insert own bookings" ON public.service_bookings;
+CREATE POLICY "Clients can insert own bookings"
+ON public.service_bookings FOR INSERT
+TO authenticated
+WITH CHECK ((SELECT auth.uid()) = user_id);
 
 DROP POLICY IF EXISTS "Admins can update any booking" ON public.service_bookings;
 CREATE POLICY "Admins can update any booking"

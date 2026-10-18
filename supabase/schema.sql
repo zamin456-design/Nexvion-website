@@ -91,6 +91,10 @@ ALTER TABLE public.booking_messages ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.contact_inquiries ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.newsletter_subscribers ENABLE ROW LEVEL SECURITY;
 
+-- Table privileges and RLS policies are both required for authenticated API access.
+REVOKE ALL ON TABLE public.service_bookings FROM anon, PUBLIC;
+GRANT SELECT, INSERT, UPDATE ON TABLE public.service_bookings TO authenticated;
+
 CREATE OR REPLACE FUNCTION public.is_admin()
 RETURNS BOOLEAN
 LANGUAGE SQL
